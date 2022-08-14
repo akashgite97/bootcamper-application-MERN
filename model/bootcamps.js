@@ -112,7 +112,7 @@ bootcampSchema.pre("save", function (next) {
 });
 
 //Geocode & location fields
-/* bootcampSchema.pre('save', async function(next){
+ bootcampSchema.pre('save', async function(next){
   const loc = await geoCoder.geocode(this.address)
   this.location= {
     type:'Point',
@@ -128,6 +128,6 @@ bootcampSchema.pre("save", function (next) {
   //Do not save this details in DB
   this.address = undefined
   next()
-}) */
+}) 
 
 module.exports = mongoose.model("Bootcamp", bootcampSchema);
