@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const bootcampsRoutes = require("./routes/bootcamps");
+const coursesRoutes = require("./routes/courses");
 const { logger } = require("./middlewares/logger");
 const connectDB = require("./config/db");
 const colors = require("colors");
@@ -18,7 +19,9 @@ connectDB();
 app.use(logger);
 
 //Routes
+
 app.use("/api/v1/bootcamps", bootcampsRoutes);
+app.use("/api/v1/courses", coursesRoutes);
 app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000;

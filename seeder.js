@@ -2,8 +2,8 @@ const { default: mongoose } = require("mongoose");
 const color = require("colors");
 const dotenv = require("dotenv");
 const fs = require("fs");
-const Bootcamp = require("../model/bootcamps");
-const Courses = require("../model/courses");
+const Bootcamp = require("./model/bootcamps");
+const Courses = require("./model/courses");
 
 dotenv.config({ path: "./config/.env" });
 
