@@ -1,4 +1,4 @@
-function slugify(string) {
+exports.slugify=(string)=> {
   return string
     .toString()
     .trim()
@@ -10,4 +10,3 @@ function slugify(string) {
     .replace(/-+$/, "");
 }
 
-module.exports = slugify;

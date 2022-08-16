@@ -1,5 +1,5 @@
 const { default: mongoose } = require("mongoose");
-const slugify = require("../utils/slugify");
+const slugify = require("../utils/utils");
 const geoCoder = require('../utils/geoCoder')
 
 const bootcampSchema = new mongoose.Schema({
