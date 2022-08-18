@@ -6,6 +6,8 @@ const { logger } = require("./middlewares/logger");
 const connectDB = require("./config/db");
 const colors = require("colors");
 const { errorHandler } = require("./middlewares/errorHandler");
+const fileupload = require('express-fileupload')
+const path = require('path')
 
 const app = express();
 app.use(express.json());
@@ -17,9 +19,12 @@ connectDB();
 
 //middleware
 app.use(logger);
+app.use(fileupload())
+
+//set static folders
+app.use(express.static(path.join(__dirname, 'public')))
 
 //Routes
-
 app.use("/api/v1/bootcamps", bootcampsRoutes);
 app.use("/api/v1/courses", coursesRoutes);
 app.use(errorHandler)
