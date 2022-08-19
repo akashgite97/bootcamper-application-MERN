@@ -2,12 +2,14 @@ const express = require("express");
 const dotenv = require("dotenv");
 const bootcampsRoutes = require("./routes/bootcamps");
 const coursesRoutes = require("./routes/courses");
+const authRoutes = require("./routes/auth");
 const { logger } = require("./middlewares/logger");
 const connectDB = require("./config/db");
 const colors = require("colors");
 const { errorHandler } = require("./middlewares/errorHandler");
 const fileupload = require('express-fileupload')
 const path = require('path')
+const cookieParser = require('cookie-parser')
 
 const app = express();
 app.use(express.json());
@@ -20,6 +22,7 @@ connectDB();
 //middleware
 app.use(logger);
 app.use(fileupload())
+app.use(cookieParser())
 
 //set static folders
 app.use(express.static(path.join(__dirname, 'public')))
@@ -27,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 //Routes
 app.use("/api/v1/bootcamps", bootcampsRoutes);
 app.use("/api/v1/courses", coursesRoutes);
+app.use("/api/v1/auth", authRoutes);
 app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000;
