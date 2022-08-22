@@ -99,7 +99,6 @@ exports.uploadBootcampPhoto = asyncHandler(async (req, res, next) => {
   if (!file.mimetype.startsWith("image")) {
     return next(new ErrorResponse(`Please upload an image`, 400));
   }
-console.log(req.files.file.size)
   //Check max file size
   if (file.size > process.env.MAX_FILE_SIZE) {
     return next(new ErrorResponse(`Please upload an image less than 1MB`, 400));

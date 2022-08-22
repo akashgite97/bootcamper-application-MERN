@@ -2,8 +2,6 @@ const { default: mongoose } = require("mongoose");
 const { asyncHandler } = require("../middlewares/asyncHandler");
 const User = require("../model/user");
 const ErrorResponse = require("../utils/errorResponse");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 //@Desc   Get All Bootcamps
 exports.registerUser = asyncHandler(async (req, res, next) => {
@@ -56,3 +54,12 @@ const sendTokenResponse = (user, statusCode, res) => {
     .cookie("token", token, options)
     .json({ success: true, token });
 };
+
+//@Desc : Get loggedin user details
+exports.getMyDetails = asyncHandler(async (req, res, next)=>{
+  const user  = await User.findById(req.user.id)
+  res.status(200).json({
+    success:true,
+    data:user
+  })
+})
