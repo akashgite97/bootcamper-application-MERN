@@ -2,6 +2,7 @@ const { default: mongoose } = require("mongoose");
 const { asyncHandler } = require("../middlewares/asyncHandler");
 const User = require("../model/user");
 const ErrorResponse = require("../utils/errorResponse");
+const { errorMessage } = require("../utils/messagesConstant");
 
 //@Desc   Get All Bootcamps
 exports.registerUser = asyncHandler(async (req, res, next) => {
@@ -27,14 +28,14 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
   const existingUser = await User.findOne({ email }).select("+password");
 
   if (!email || !password)
-    return next(new ErrorResponse("Please provide an email and password", 400));
+    return next(new ErrorResponse(errorMessage.requiredEmailAndPassword, 400));
 
-  if (!existingUser) return next(new ErrorResponse("User dose not exits", 404));
+  if (!existingUser) return next(new ErrorResponse(errorMessage.userNotExistError, 404));
 
   const isPasswordCorrect = existingUser.matchPassword(password);
 
   if (!isPasswordCorrect)
-    return next(new ErrorResponse("Password dosen't match", 401));
+    return next(new ErrorResponse(errorMessage.passwordMatchError, 401));
 
   sendTokenResponse(existingUser, 200, res);
 });

@@ -27,7 +27,7 @@ exports.getCourse = asyncHandler(async (req, res, next) => {
   });
 
   if (!course) {
-    return next(new ErrorResponse(`Course not found with id ${id}`, 404));
+    return next(new ErrorResponse(`${errorMessage.courseIdNotFound} ${id}`, 404));
   }
 
   res.status(200).json({
@@ -43,7 +43,7 @@ exports.addCourse = asyncHandler(async (req, res, next) => {
 
   const bootcamp = await Bootcamp.findById(req.params.bootcampId);
   if (!bootcamp) {
-    return next(new ErrorResponse(`Bootcamp not found with id ${id}`, 404));
+    return next(new ErrorResponse(`${errorMessage.bootcampIdNotFound} ${id}`, 404));
   }
 
   const newCourse = new Courses(req.body);
@@ -61,7 +61,7 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
   const course = await Courses.findById(id);
 
   if (!course) {
-    return next(new ErrorResponse(`Course not found with id ${id}`, 404));
+    return next(new ErrorResponse(`${errorMessage.courseIdNotFound} ${id}`, 404));
   }
 
   const updatedCourse = await Courses.findByIdAndUpdate(id, req.body, {
@@ -81,7 +81,7 @@ exports.deleteCourse = asyncHandler(async (req, res, next) => {
   const course = await Courses.findById(id);
 
   if (!course) {
-    return next(new ErrorResponse(`Course not found with id ${id}`, 404));
+    return next(new ErrorResponse(`${errorMessage.courseIdNotFound} ${id}`, 404));
   }
   await course.remove();
   res.status(200).json({

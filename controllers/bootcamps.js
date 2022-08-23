@@ -3,7 +3,8 @@ const { asyncHandler } = require("../middlewares/asyncHandler");
 const Bootcamp = require("../model/bootcamps");
 const ErrorResponse = require("../utils/errorResponse");
 const geoCoder = require("../utils/geoCoder");
-const path = require('path')
+const path = require('path');
+const { errorMessage, successMessage } = require("../utils/messagesConstant");
 
 //@Desc   Get All Bootcamps
 exports.getBootcamps = asyncHandler(async (req, res, next) => {
@@ -16,7 +17,7 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   const bootcamp = await Bootcamp.findById(id);
   if (!bootcamp) {
-    return next(new ErrorResponse(`Bootcamp not found with id ${id}`, 404));
+    return next(new ErrorResponse(`${errorMessage.bootcampIdNotFound} ${id}`, 404));
   }
   res.status(200).json({ success: true, data: bootcamp });
 });
@@ -33,7 +34,7 @@ exports.updateBootcamp = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).send(`No bootcamp with id: ${id}`);
+    return res.status(404).send(`${errorMessage.bootcampIdNotFound}: ${id}`);
   }
   const updatedBootcamp = await Bootcamp.findByIdAndUpdate(id, req.body, {
     new: true,
@@ -48,13 +49,13 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).send(`No bootcamp with id: ${id}`);
+    return res.status(404).send(`${errorMessage.bootcampIdNotFound} ${id}`);
   }
   const bootcamp = await Bootcamp.findById(id);
   //Delete handled by middleware in bootcamp model
   bootcamp.remove();
 
-  res.json({ success: true, message: "Bootcamp deleted successfully" });
+  res.json({ success: true, message: successMessage.bootcampDeletd});
 });
 
 //@Desc   Locate Bootcamp
@@ -88,20 +89,20 @@ exports.uploadBootcampPhoto = asyncHandler(async (req, res, next) => {
   const bootcamp = await Bootcamp.findById(id);
 
   if (!bootcamp) {
-    return next(new ErrorResponse(`Bootcamp not found with id ${id}`, 404));
+    return next(new ErrorResponse(`${errorMessage.bootcampIdNotFound} ${id}`, 404));
   }
   if (!req.files) {
-    return next(new ErrorResponse(`Please upload a photo`, 404));
+    return next(new ErrorResponse(errorMessage.uploadBootcampImage, 404));
   }
 
   const file = req.files.file;
   //Check file type is image or not
   if (!file.mimetype.startsWith("image")) {
-    return next(new ErrorResponse(`Please upload an image`, 400));
+    return next(new ErrorResponse(errorMessage.uploadBootcampImage, 400));
   }
   //Check max file size
   if (file.size > process.env.MAX_FILE_SIZE) {
-    return next(new ErrorResponse(`Please upload an image less than 1MB`, 400));
+    return next(new ErrorResponse(errorMessage.imageSizeError, 400));
   }
 
   //Custom file name
@@ -110,11 +111,11 @@ exports.uploadBootcampPhoto = asyncHandler(async (req, res, next) => {
   //Move file to static folder
   file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (error)=>{
     if(error){
-      return next(new ErrorResponse(`Problem with file upload`, 400));
+      return next(new ErrorResponse(errorMessage.imageUploadError, 400));
     }
     await Bootcamp.findByIdAndUpdate(id, {photo:file.name})
   })
 
 
-  res.json({ success: true, message:`${file.name} uploaded successfully` });
+  res.json({ success: true, message:`${file.name} ${successMessage.imageUploaded}` });
 });
