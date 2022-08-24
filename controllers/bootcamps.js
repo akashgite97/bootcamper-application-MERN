@@ -24,6 +24,15 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
 
 //@Desc   Create Bootcamp
 exports.createBootcamp = asyncHandler(async (req, res, next) => {
+  //Add user to reqBody
+  req.body.user = req.user.id
+
+  const publishedBootcamp = await Bootcamp.findOne({user: req.user.id})
+ //if the use is not admin then can only add one bootcamp
+  if(publishedBootcamp && req.user.role!=='admin'){
+     return next(new ErrorResponse(`The use with ID ${req.user.id} has already published a bootcamp`, 400));
+  }
+
   const newBootcamp = new Bootcamp(req.body);
   await newBootcamp.save();
   res.status(201).json({ success: true, data: newBootcamp });
@@ -36,12 +45,19 @@ exports.updateBootcamp = asyncHandler(async (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).send(`${errorMessage.bootcampIdNotFound}: ${id}`);
   }
-  const updatedBootcamp = await Bootcamp.findByIdAndUpdate(id, req.body, {
+  let bootcamp = await Bootcamp.findById(id);
+
+  //make sure user is bootcamp owner
+  if(bootcamp.user.toString()!== req.user.id){
+    return next(new ErrorResponse(`User ${user.params.id} is not authorized to update this bootcamp`),401)
+  }
+
+   bootcamp = await Bootcamp.findByIdAndUpdate(id, req.body, {
     new: true,
     runValidators: true,
-  });
+  })
 
-  res.json({ success: true, data: updatedBootcamp });
+  res.json({ success: true, data: bootcamp });
 });
 
 //@Desc   Delete Bootcamp
