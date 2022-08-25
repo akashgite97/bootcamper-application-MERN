@@ -26,7 +26,8 @@ const users = JSON.parse(fs.readFileSync(`${__dirname}/_data/users.json`, "utf-8
 const importData = async () => {
   try {
     await Bootcamp.create(bootcamps);
-    await Courses.create(users);
+    await Courses.create(courses);
+    await User.create(users);
     //await newBootcamp.save();
     console.log("Data Imported".green.inverse)
     process.exit()
@@ -40,7 +41,7 @@ const deleteData = async () => {
   try {
     await Bootcamp.deleteMany();
     await Courses.deleteMany();
-    
+    await User .deleteMany();
     console.log("Data Deleted".red.inverse)
     process.exit()
   } catch (error) {
