@@ -13,6 +13,14 @@ const fileupload = require("express-fileupload");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 
+//Security Configuration Packages
+const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const rateLimit = require("express-rate-limit");
+const hpp = require("hpp");
+const cors = require("cors");
+
 const app = express();
 app.use(express.json());
 
@@ -22,9 +30,23 @@ dotenv.config({ path: "./config/.env" });
 connectDB();
 
 //middleware
+app.use(mongoSanitize()); // Prevent SQL injections
+app.use(helmet()); // Adds Header Security
+app.use(xss()); // Prevent cross site scripting
 app.use(logger);
 app.use(fileupload());
 app.use(cookieParser());
+app.use(cors());
+
+//Request Rate Limiting
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, //10min
+  max: 100,
+});
+app.use(limiter);
+
+//Prevent http param polution
+app.use(hpp());
 
 //set static folders
 app.use(express.static(path.join(__dirname, "public")));

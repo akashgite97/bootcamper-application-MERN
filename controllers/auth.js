@@ -43,6 +43,18 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
   }
 });
 
+//@Desc : Logout User
+exports.logOut = asyncHandler(async (req, res, next) => {
+  res.cookie("token", "nonde", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({
+    success: true,
+    data: {},
+  });
+});
+
 //@Desc  Get token and create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
   const token = user.getSignedJwtToken();
@@ -85,15 +97,15 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 
 //@Desc : Update upassword
 exports.updatePassword = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id).select('+password');
-  
+  const user = await User.findById(req.user.id).select("+password");
+
   //check current password
-  if(!(await user.matchPassword(req.body.currentPassword))){
-    return next(new ErrorResponse('Password is incorrect',401))
+  if(!(await user.matchPassword(req.body.currentPassword))) {
+    return next(new ErrorResponse("Password is incorrect", 401));
   }
 
-  user.password = req.body.newPassword
-  await user.save()
+  user.password = req.body.newPassword;
+  await user.save();
   sendTokenResponse(user, 200, res);
 });
 
