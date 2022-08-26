@@ -9,7 +9,9 @@ exports.errorMessage={
    //Auth Error
    requiredEmailAndPassword:"Please provide an email and password",
    userNotExistError:"User dose not exits",
-   passwordMatchError:"Password dosen't match"
+   passwordMatchError:"Password dosen't match",
+   //review Errors
+   reviewIdNotFound:"Review not found with id"
 }
 
 exports.successMessage={
