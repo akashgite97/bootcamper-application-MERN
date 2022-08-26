@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const bootcampsRoutes = require("./routes/bootcamps");
 const coursesRoutes = require("./routes/courses");
 const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/users");
 const { logger } = require("./middlewares/logger");
 const connectDB = require("./config/db");
 const colors = require("colors");
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use("/api/v1/bootcamps", bootcampsRoutes);
 app.use("/api/v1/courses", coursesRoutes);
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/user", userRoutes);
 app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000;
