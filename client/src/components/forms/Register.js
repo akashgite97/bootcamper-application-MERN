@@ -3,16 +3,27 @@ import { Link } from "react-router-dom";
 import { BsPersonPlus } from "react-icons/bs";
 import { useState } from "react";
 import InputTextField from "../common/InputFileds/inputText";
+import {useDispatch, useSelector} from 'react-redux'
+import { updateFormState, resetFormState } from "../../redux/slice/formSlice";
+import { register } from "../../redux/slice/authSlice";
 
 const Register = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
 
-  const handleRegister = () => {
+  const dispatch  =useDispatch()
+  const {firstName, lastName, email, password, confirmPassword, role} = useSelector(state=>state.formData)
+
+  const handleRegister = async () => {
     console.log(email, password);
-    setEmail("");
-    setPassword("");
+    dispatch(register({firstName,lastName, email, password, confirmPassword, role}))
+    dispatch(resetFormState())
   };
+
+  const handleOnchange=(event)=>{
+    const {name,value}=event.target
+    dispatch(updateFormState(name,value))
+  }
+
+ 
 
   return (
     <div className="mt-20 flex items-center justify-center ">
@@ -25,11 +36,19 @@ const Register = () => {
           <form className="space-y-6">
             <input
               type="text"
-              name="name"
-              value={email}
-              placeholder="Name"
+              name="firstName"
+              value={firstName}
+              placeholder="First Name"
               className="w-full outline-none p-2 border-gray border focus-none"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleOnchange}
+            />
+            <input
+              type="text"
+              name="lastName"
+              value={lastName}
+              placeholder="Last Name"
+              className="w-full outline-none p-2 border-gray border focus-none "
+              onChange={handleOnchange}
             />
             <input
               type="email"
@@ -37,7 +56,7 @@ const Register = () => {
               value={email}
               placeholder="Email"
               className="w-full outline-none p-2 border-gray border focus-none"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleOnchange}
             />
 
             <InputTextField
@@ -45,28 +64,29 @@ const Register = () => {
               name="password"
               value={password}
               placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleOnchange}
             />
             <InputTextField
               type="password"
               name="confirmPassword"
-              value={password}
+              value={confirmPassword}
               placeholder="Confirm Password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleOnchange}
             />
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2" onChange={handleOnchange}>
               <input
                 type="radio"
-                name="user"
+                name="role"
                 value="user"
-                checked={true}
+                checked={role === "user"}
                 className="text-xl h-6 w-5 accent-brightRed"
               />{" "}
               <lable>Regular User</lable>
               <input
                 type="radio"
-                name="provider"
-                value="provider"
+                name="role"
+                value="publisher"
+                checked={role === "publisher"}
                 className="text-xl h-6 w-5 accent-brightRed"
               />{" "}
               <lable>Bootcamp Publisher</lable>

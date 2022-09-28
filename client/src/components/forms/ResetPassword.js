@@ -1,11 +1,17 @@
 import React from "react";
 import { FaUnlockAlt } from "react-icons/fa";
 import { useState } from "react";
+import {useDispatch, useSelector} from 'react-redux'
+import { resetPassword } from "../../redux/slice/authSlice";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState();
+  const dispatch  =useDispatch()
+  const data= useSelector(state=>state.auth)
+
 
   const handleReset = () => {
+    dispatch(resetPassword(email))
     setEmail("");
   };
 

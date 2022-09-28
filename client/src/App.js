@@ -2,15 +2,18 @@ import React from 'react'
 import { Suspense } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import "./App.css";
+
+import LoadingSpinner from './components/common/LoadingSpinner';
 import ResetPassword from './components/forms/ResetPassword';
 const Header = React.lazy(()=>import('./components/Header'))
 const Home = React.lazy(()=>import('./components/Home/Home.js'))
 const Login = React.lazy(()=>import('./components/forms/Login'))
 const Register = React.lazy(()=>import('./components/forms/Register'))
 
+
 function App() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingSpinner />}>
       <BrowserRouter>
         <Header />
         <Routes>

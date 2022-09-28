@@ -1,16 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BsBoxArrowInRight } from "react-icons/bs";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {useDispatch, useSelector} from 'react-redux';
+import { login } from "../../redux/slice/authSlice";
 
 const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const dispatch =useDispatch()
 
   const handleLogin = () => {
     console.log(email, password);
-    setEmail("");
-    setPassword("");
+    dispatch(login({email,password}))
   };
 
   return (
