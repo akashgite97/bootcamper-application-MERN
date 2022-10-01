@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { BsBoxArrowInRight } from "react-icons/bs";
 import { useState, useEffect } from "react";
 import {useDispatch, useSelector} from 'react-redux';
-import { login } from "../../redux/slice/authSlice";
+import { loginUser } from "../../redux/slice/authSlice";
+
 
 const Login = () => {
   const [email, setEmail] = useState();
@@ -12,7 +13,7 @@ const Login = () => {
 
   const handleLogin = () => {
     console.log(email, password);
-    dispatch(login({email,password}))
+    dispatch(loginUser({email,password})).then((data)=>console.log(data)).catch((err)=>console.log(err))
   };
 
   return (

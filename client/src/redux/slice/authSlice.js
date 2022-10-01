@@ -4,71 +4,63 @@ import axios from "axios";
 const initialState = {
   user: "",
   isLoading: false,
-  error: "",
+  errorMessage: "",
+  successMessage: "",
 };
-
-export const login = createAsyncThunk("authSlice/login", async (userDetails) => {
-    return axios.post('http://localhost:5000/api/v1/auth/login', {email:userDetails.email,password:userDetails.password})
-        .then(user=>console.log(user))
-});
-
-export const register = createAsyncThunk("authSlice/register", async (userDetails) => {
-    return axios.post('http://localhost:5000/api/v1/auth/register', userDetails)
-        .then(user=>console.log(user))
-});
-
-export const resetPassword = createAsyncThunk("authSlice/resetPassword", async (email) => {
-    return axios.post('http://localhost:5000/api/v1/auth/forgotPassword', {email:email})
-        .then(user=>console.log(user))
-});
-
 
 const authSlice = createSlice({
   name: "authSlice",
   initialState: initialState,
-  extraReducers: (builder) => {
-    builder.addCase(login.pending, (state) => {
+  reducers: {
+    loginUser: (state) => {
       state.isLoading = true;
-      state.error = "";
-    });
-    builder.addCase(login.fulfilled, (state, action) => {
+    },
+    loginSuccess: (state, action) => {
       state.isLoading = false;
       state.error = "";
       state.user = action.payload;
-    });
-    builder.addCase(login.rejected, (state, action) => {
+    },
+    loginRejected: (state) => {
+      state.isLoading = false;
+      state.error = "";
+    },
+    registerUser: (state) => {
       state.isLoading = true;
-      state.error = action.payload;
-      state.user = "";
-    });
-    builder.addCase(register.pending, (state) => {
-        state.isLoading = true;
-        state.error = "";
-      });
-    builder.addCase(register.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = "";
-        state.user = action.payload;
-      });
-    builder.addCase(register.rejected, (state, action) => {
-        state.isLoading = true;
-        state.error = action.payload;
-        state.user = "";
-      });
-      builder.addCase(resetPassword.pending, (state) => {
-        state.isLoading = true;
-        state.error = "";
-      });
-    builder.addCase(resetPassword.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = "";
-      });
-    builder.addCase(resetPassword.rejected, (state, action) => {
-        state.isLoading = true;
-        state.error = action.payload;
-      });  
+    },
+    registerSuccess: (state, action) => {
+      state.isLoading = false;
+      state.error = "";
+      state.user = action.payload;
+    },
+    registerRejected: (state) => {
+      state.isLoading = false;
+      state.error = "";
+    },
+    resetPassword: (state) => {
+      state.isLoading = true;
+    },
+    resetPasswordSuccess: (state, action) => {
+      state.isLoading = false;
+      state.error = "";
+      state.successMessage = action.payload;
+    },
+    resetPasswordRejected: (state) => {
+      state.isLoading = false;
+      state.error = "";
+    },
   },
 });
 
-export default authSlice.reducer
+export const {
+  loginSuccess,
+  loginUser,
+  loginRejected,
+  registerUser,
+  registerSuccess,
+  registerRejected,
+  resetPassword,
+  resetPasswordSuccess,
+  resetPasswordRejected
+} = authSlice.actions;
 
+export default authSlice.reducer;

@@ -5,7 +5,7 @@ import { useState } from "react";
 import InputTextField from "../common/InputFileds/inputText";
 import {useDispatch, useSelector} from 'react-redux'
 import { updateFormState, resetFormState } from "../../redux/slice/formSlice";
-import { register } from "../../redux/slice/authSlice";
+import { registerUser } from "../../redux/slice/authSlice";
 
 const Register = () => {
 
@@ -14,7 +14,7 @@ const Register = () => {
 
   const handleRegister = async () => {
     console.log(email, password);
-    dispatch(register({firstName,lastName, email, password, confirmPassword, role}))
+    dispatch(registerUser({firstName,lastName, email, password, confirmPassword, role}))
     dispatch(resetFormState())
   };
 
