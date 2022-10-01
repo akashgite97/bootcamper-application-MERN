@@ -13,7 +13,7 @@ const Login = () => {
 
   const handleLogin = () => {
     console.log(email, password);
-    dispatch(loginUser({email,password})).then((data)=>console.log(data)).catch((err)=>console.log(err))
+    dispatch(loginUser({email,password}))
   };
 
   return (

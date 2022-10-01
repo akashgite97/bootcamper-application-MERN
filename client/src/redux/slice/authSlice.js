@@ -17,24 +17,24 @@ const authSlice = createSlice({
     },
     loginSuccess: (state, action) => {
       state.isLoading = false;
-      state.error = "";
+      state.errorMessage = "";
       state.user = action.payload;
     },
-    loginRejected: (state) => {
+    loginRejected: (state, action) => {
       state.isLoading = false;
-      state.error = "";
+      state.errorMessage = action.payload;
     },
     registerUser: (state) => {
       state.isLoading = true;
     },
     registerSuccess: (state, action) => {
       state.isLoading = false;
-      state.error = "";
+      state.errorMessage = "";
       state.user = action.payload;
     },
-    registerRejected: (state) => {
+    registerRejected: (state, action) => {
       state.isLoading = false;
-      state.error = "";
+      state.errorMessage = action.payload;
     },
     resetPassword: (state) => {
       state.isLoading = true;
@@ -44,9 +44,9 @@ const authSlice = createSlice({
       state.error = "";
       state.successMessage = action.payload;
     },
-    resetPasswordRejected: (state) => {
+    resetPasswordRejected: (state, action) => {
       state.isLoading = false;
-      state.error = "";
+      state.errorMessage = action.payload;
     },
   },
 });
@@ -60,7 +60,7 @@ export const {
   registerRejected,
   resetPassword,
   resetPasswordSuccess,
-  resetPasswordRejected
+  resetPasswordRejected,
 } = authSlice.actions;
 
 export default authSlice.reducer;

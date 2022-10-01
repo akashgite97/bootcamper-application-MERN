@@ -3,27 +3,39 @@ import { Link } from "react-router-dom";
 import { BsPersonPlus } from "react-icons/bs";
 import { useState } from "react";
 import InputTextField from "../common/InputFileds/inputText";
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import { updateFormState, resetFormState } from "../../redux/slice/formSlice";
 import { registerUser } from "../../redux/slice/authSlice";
+import { toast } from "react-toastify";
 
 const Register = () => {
-
-  const dispatch  =useDispatch()
-  const {firstName, lastName, email, password, confirmPassword, role} = useSelector(state=>state.formData)
+  const dispatch = useDispatch();
+  const { firstName, lastName, email, password, confirmPassword, role } =
+    useSelector((state) => state.formData);
 
   const handleRegister = async () => {
     console.log(email, password);
-    dispatch(registerUser({firstName,lastName, email, password, confirmPassword, role}))
-    dispatch(resetFormState())
+    dispatch(
+      registerUser({
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+        role,
+      })
+    );
+    dispatch(resetFormState());
   };
 
-  const handleOnchange=(event)=>{
-    const {name,value}=event.target
-    dispatch(updateFormState(name,value))
-  }
-
- 
+  const handleOnchange = (event) => {
+    const { name, value } = event.target;
+    if (password.length === confirmPassword.length &&
+        password !== confirmPassword) {
+      toast.error("Password does not math");
+    }
+    dispatch(updateFormState(name, value));
+  };
 
   return (
     <div className="mt-20 flex items-center justify-center ">
@@ -73,7 +85,10 @@ const Register = () => {
               placeholder="Confirm Password"
               onChange={handleOnchange}
             />
-            <div className="flex items-center space-x-2" onChange={handleOnchange}>
+            <div
+              className="flex items-center space-x-2"
+              onChange={handleOnchange}
+            >
               <input
                 type="radio"
                 name="role"

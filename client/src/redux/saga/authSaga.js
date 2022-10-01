@@ -15,7 +15,7 @@ function* loginUser(userDetails) {
     const { data } = result;
     yield put(loginSuccess(data));
   } catch (error) {
-    yield put(loginRejected(error));
+    yield put(loginRejected(error?.response?.data));
   }
 }
 
@@ -25,7 +25,7 @@ function* registerUser(userDetails) {
     const { data } = result;
     yield put(registerSuccess(data));
   } catch (error) {
-    yield put(registerRejected(error));
+    yield put(registerRejected(error?.response?.data));
   }
 }
 
@@ -36,7 +36,7 @@ function* resetPassword(userDetails) {
     const { data } = result;
     yield put(resetPasswordSuccess(data));
   } catch (error) {
-    yield put(resetPasswordRejected(error));
+    yield put(resetPasswordRejected(error?.response?.data));
   }
 }
 
