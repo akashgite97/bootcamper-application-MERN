@@ -7,3 +7,5 @@ export const login = async (userDetails)=> await axios.post('/auth/login',userDe
 export const register = async (userDetails)=> await axios.post('/auth/register',userDetails)
 
 export const passwordReset = async (email)=> await axios.post('/auth/forgotPassword', email)
+
+export const getBootcampList = async ()=> await axios.get('/bootcamps')

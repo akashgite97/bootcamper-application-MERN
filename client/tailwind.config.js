@@ -17,8 +17,9 @@ module.exports = {
         darkGrayBlue:'hsl(227,12%,61%)',
         veryDarkBlue:'hsl(223,12%,13%)',
         veryPaleRed:'hsl(13,100%,96%)',
-        veryLightGray:'#F0F0F0',
-        gray:'#E5E4E2'
+        veryLightGray:'#616161',
+        gray:'#E5E4E2',
+        black:'#000'
       }
     },
   },

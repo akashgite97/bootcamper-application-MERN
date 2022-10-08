@@ -30,7 +30,6 @@ function* registerUser(userDetails) {
 }
 
 function* resetPassword(userDetails) {
-  console.log("email", userDetails.payload)
   try {
     let result = yield passwordReset(userDetails.payload);
     const { data } = result;

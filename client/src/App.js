@@ -8,6 +8,7 @@ import ResetPassword from './components/forms/ResetPassword';
 import {useSelector} from 'react-redux'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Bootcamps from './components/Bootcamps';
 const Header = React.lazy(()=>import('./components/Header'))
 const Home = React.lazy(()=>import('./components/Home/Home.js'))
 const Login = React.lazy(()=>import('./components/forms/Login'))
@@ -27,6 +28,7 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/forgotPassword" element={<ResetPassword />} />
           <Route exact path="/register" element={<Register />} />
+          <Route exact path="/bootcamps" element={<Bootcamps />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />
