@@ -1,8 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const BootcampItems = ({bootcamp, isBootcampView}) => {
+  const navigate = useNavigate()
+  
+  const navigateToBootcamp =()=>navigate(`/bootcampDetail/${bootcamp._id}`)
+
   return (
-      <div className={`mt-4 h-44 rounded overflow-hidden shadow-lg border border-gray mr-8 cursor-pointer ${isBootcampView === "grid" ?' w-full h-full m-7 md:w-1/3 md:h-1/6  ' :''}`}>
+      <div onClick={navigateToBootcamp} className={`mt-4 h-44 rounded overflow-hidden shadow-lg border border-gray mr-8 cursor-pointer ${isBootcampView === "grid" ?' w-full h-full m-7 md:w-1/3 md:h-1/6  ' :''}`}>
         <div className={isBootcampView === "grid" ?"flex flex-col space-x-4 w-full" :'flex  space-x-10'}>
           <img
             src="https://demo.auburnforest.com/html/bootcamp/bootcamp/images/resource/course-18.jpg"

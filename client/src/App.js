@@ -13,6 +13,8 @@ const Header = React.lazy(()=>import('./components/Header'))
 const Home = React.lazy(()=>import('./components/Home/Home.js'))
 const Login = React.lazy(()=>import('./components/forms/Login'))
 const Register = React.lazy(()=>import('./components/forms/Register'))
+const BootcampDetails = React.lazy(()=>import('./components/Bootcamps/bootcampDetails/bootcampDetails'))
+
 
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
           <Route exact path="/forgotPassword" element={<ResetPassword />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/bootcamps" element={<Bootcamps />} />
+          <Route exact path="/bootcampDetail/:id" element={<BootcampDetails />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />

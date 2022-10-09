@@ -9,3 +9,5 @@ export const register = async (userDetails)=> await axios.post('/auth/register',
 export const passwordReset = async (email)=> await axios.post('/auth/forgotPassword', email)
 
 export const getBootcampList = async ()=> await axios.get('/bootcamps')
+
+export const searchBootcampByLocation = async (zipCode,milesFrom)=> await axios.get(`/bootcamps/radius/${zipCode}/${milesFrom}`)

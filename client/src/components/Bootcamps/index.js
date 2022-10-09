@@ -4,20 +4,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { getBootcamps } from "../../redux/slice/bootcampSlice";
 import Select from "react-select";
 import { dateFilterOptions } from "../../constants";
+import LoadingSpinner from "../common/LoadingSpinner";
 const BootcampFilter = React.lazy(()=>import('./BootcampFilter'))
 const BootcampItems = React.lazy(()=>import('./BootcampItems'))
 
 const Bootcamps = () => {
   const [isBootcampView, setBootcampView] = useState("list");
   const dispatch = useDispatch();
-  const { bootcampsList } = useSelector((state) => state.bootcamps);
+  const { bootcampsList, milesFrom, zipCode, isLoading } = useSelector((state) => state.bootcamps);
 
   useEffect(() => {
-    dispatch(getBootcamps());
-  }, [dispatch]);
+    if(milesFrom.length===0 && zipCode.length===0){
+      dispatch(getBootcamps());
+    }
+  }, [dispatch, milesFrom, zipCode]);
 
   return (
     <div className="flex flex-col md:justify-center mb-32 md:px-4 mt-20 md:flex-row">
+      {isLoading && <LoadingSpinner />}
       <div className="space-y-6 md:w-7/12">
         <div className="flex items-center justify-between">
           <h2 className="text-3xl font-bold ">Browse Bootcamps</h2>
@@ -48,7 +52,7 @@ const Bootcamps = () => {
           </div>
         </div>
         <div className={isBootcampView === "grid" ?"flex flex flex-wrap " :''}>
-        {bootcampsList?.map((bootcamp) => (
+        {bootcampsList?.data?.map((bootcamp) => (
           <BootcampItems bootcamp={bootcamp} isBootcampView={isBootcampView} />
         ))}
         </div>

@@ -11,7 +11,7 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
   //Handled by advanceResults middleware
   //res.status(200).json(res.advanceResults);
   const bootcamps = await Bootcamp.find()
-  res.status(200).json(bootcamps);
+  res.status(200).json({data:bootcamps});
 });
 
 //@Desc   Get Single Bootcamp
