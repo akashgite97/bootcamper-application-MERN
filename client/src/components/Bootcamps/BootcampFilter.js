@@ -1,8 +1,13 @@
-import React from "react";
+import React,{useState} from "react";
 import Select from 'react-select'
 import { dateFilterOptions } from "../../constants";
 
 const BootcampFilter = () => {
+
+  const onChange = (event)=>{
+  
+  }
+
   return (
     <div className="p-4">
       <div class="rounded overflow-hidden shadow-lg p-2 mt-4 ">

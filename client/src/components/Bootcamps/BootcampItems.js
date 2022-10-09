@@ -1,17 +1,16 @@
 import React from "react";
 
-const BootcampItems = ({bootcamp}) => {
+const BootcampItems = ({bootcamp, isBootcampView}) => {
   return (
-    <div className="mt-4 flex  justify-center h-44">
-      <div class="w-full rounded overflow-hidden shadow-lg border border-gray mr-8 ">
-        <div className="flex space-x-10">
+      <div className={`mt-4 h-44 rounded overflow-hidden shadow-lg border border-gray mr-8 cursor-pointer ${isBootcampView === "grid" ?' w-full h-full m-7 md:w-1/3 md:h-1/6  ' :''}`}>
+        <div className={isBootcampView === "grid" ?"flex flex-col space-x-4 w-full" :'flex  space-x-10'}>
           <img
             src="https://demo.auburnforest.com/html/bootcamp/bootcamp/images/resource/course-18.jpg"
             alt="bootcamp_image"
-            className="w-52  h-44"
+            className={isBootcampView === "grid" ? 'h-44' : "w-52  h-44"}
           />
           <div className="flex flex-col space-y-3 justify-center">
-            <h2 className="font-bold text-brightRed text-lg text-left">{bootcamp?.name}</h2>
+            <h2 className={`font-bold text-brightRed text-lg text-left ${isBootcampView === "grid" ? 'mt-4':''}`}>{bootcamp?.name}</h2>
             <span
               className="bg-black text-white text-xs font-semibold mr-2
                              px-2.5 py-0.5 rounded w-max"
@@ -30,7 +29,7 @@ const BootcampItems = ({bootcamp}) => {
           </div>
         </div>
       </div>
-    </div>
+  
   );
 };
 

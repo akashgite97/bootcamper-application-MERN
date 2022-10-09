@@ -19,6 +19,7 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.errorMessage = "";
       state.user = action.payload;
+      localStorage.setItem('user', action.payload);
     },
     loginRejected: (state, action) => {
       state.isLoading = false;

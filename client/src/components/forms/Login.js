@@ -4,16 +4,20 @@ import { BsBoxArrowInRight } from "react-icons/bs";
 import { useState, useEffect } from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import { loginUser } from "../../redux/slice/authSlice";
+import {useNavigate} from 'react-router-dom'
 
 
 const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const dispatch =useDispatch()
+  const navigate =useNavigate()
 
   const handleLogin = () => {
-    console.log(email, password);
     dispatch(loginUser({email,password}))
+    if(localStorage.getItem('Profile')){
+      navigate('/bootcamps')
+    }
   };
 
   return (
