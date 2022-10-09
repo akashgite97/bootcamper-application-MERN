@@ -9,7 +9,9 @@ const { errorMessage, successMessage } = require("../utils/messagesConstant");
 //@Desc   Get All Bootcamps
 exports.getBootcamps = asyncHandler(async (req, res, next) => {
   //Handled by advanceResults middleware
-  res.status(200).json(res.advanceResults);
+  //res.status(200).json(res.advanceResults);
+  const bootcamps = await Bootcamp.find()
+  res.status(200).json(bootcamps);
 });
 
 //@Desc   Get Single Bootcamp
